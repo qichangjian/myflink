@@ -1,0 +1,2 @@
+简单实现了一个批处理word count例子
+简单实现了一个实时接收word count例子
