@@ -1,0 +1,47 @@
+DataStream应用程序
+
+场景说明
+    假定用户有某个网站周末网民网购停留时间的日志文本，基于某些业务要求，要求开发Flink的DataStream应用程序实现如下功能：
+    1.实时统计总计网购时间超过2个小时的女性网民信息。
+    2.周末两天的日志文件第一列为姓名，第二列为性别，第三列为本次停留时间，单位为分钟，分隔符为“,”。
+
+测试文件样式：
+    log1.txt：周六网民停留日志。该日志文件在该样例程序中的data目录下获取。
+        LiuYang,female,20
+        YuanJing,male,10
+        GuoYijun,male,5
+        CaiXuyu,female,50
+        Liyuan,male,20
+        FangBo,female,50
+        LiuYang,female,20
+        YuanJing,male,10
+        GuoYijun,male,50
+        CaiXuyu,female,50
+    FangBo,female,60log2.txt：周日网民停留日志。该日志文件在该样例程序中的data目录下获取。
+        LiuYang,female,20
+        YuanJing,male,10
+        CaiXuyu,female,50
+        FangBo,female,50
+        GuoYijun,male,5
+        CaiXuyu,female,50
+        Liyuan,male,20
+        CaiXuyu,female,50
+        FangBo,female,50
+        LiuYang,female,20
+        YuanJing,male,10
+        FangBo,female,50
+        GuoYijun,male,50
+        CaiXuyu,female,50
+    FangBo,female,60数据规划DataStream样例工程的数据存储在文本中。
+
+    将log1.txt和log2.txt放置在某路径下，例如"/opt/log1.txt"和"/opt/log2.txt"。
+
+开发思路
+    统计日志文件中本周末网购停留总时间超过2个小时的女性网民信息。
+
+    主要分为四个部分：
+        1.读取文本数据，生成相应DataStream，解析数据生成UserRecord信息。
+        2.筛选女性网民上网时间数据信息。
+        3.按照姓名、性别进行keyby操作，并汇总在一个时间窗口内每个女性上网时间。
+        4.筛选连续上网时间超过阈值的用户，并获取结果。
+
